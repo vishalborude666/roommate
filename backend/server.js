@@ -18,19 +18,56 @@ import adminRoutes from "./routes/adminRoutes.js";
 await connectDB();
 
 const app = express();
+
+const defaultAllowedOrigins = [
+  "http://localhost:5173",
+  "https://roommate-3f11.vercel.app",
+];
+
+const envAllowedOrigins = (process.env.CLIENT_URL || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+const allowedOrigins = [
+  ...defaultAllowedOrigins,
+  ...envAllowedOrigins,
+  /^https:\/\/roommate-3f11-[a-z0-9-]+\.vercel\.app$/,
+  /^https:\/\/roommate-3f11-[a-z0-9-]+-vishalborude666s-projects\.vercel\.app$/,
+];
+
+const isAllowedOrigin = (origin) => {
+  if (!origin) return true;
+  return allowedOrigins.some((allowedOrigin) => {
+    if (allowedOrigin instanceof RegExp) return allowedOrigin.test(origin);
+    return allowedOrigin === origin;
+  });
+};
+
 const server = http.createServer(app);
 
 const io = new Server(server, {
-  cors: { origin: process.env.CLIENT_URL || "*", credentials: true },
+  cors: {
+    origin: (origin, callback) => {
+      if (isAllowedOrigin(origin)) {
+        callback(null, true);
+        return;
+      }
+      callback(new Error(`Socket CORS blocked for origin: ${origin}`), false);
+    },
+    credentials: true,
+  },
 });
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://roommate-3f11.vercel.app",
-      "https://roommate-3f11-i9ep5xcto-vishalborude666s-projects.vercel.app"
-    ],
+    origin: (origin, callback) => {
+      if (isAllowedOrigin(origin)) {
+        callback(null, true);
+        return;
+      }
+      callback(new Error(`CORS blocked for origin: ${origin}`), false);
+    },
     credentials: true,
   })
 );
