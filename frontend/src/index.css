@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-paper text-ink font-body antialiased;
+}
+
+h1, h2, h3, h4 {
+  @apply font-display;
+}
+
+::selection {
+  @apply bg-clay-400/40;
+}
+
+/* Focus visibility for accessibility */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid #456138;
+  outline-offset: 2px;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 font-medium text-sm transition-all duration-150;
+}
+.btn-primary {
+  @apply btn bg-moss-600 text-white hover:bg-moss-700 shadow-sm hover:shadow;
+}
+.btn-secondary {
+  @apply btn bg-white text-ink border border-slatex-100 hover:border-moss-400;
+}
+.btn-clay {
+  @apply btn bg-clay-500 text-white hover:bg-clay-600;
+}
+.card {
+  @apply bg-white rounded-xl2 border border-slatex-100 shadow-sm;
+}
+.input {
+  @apply w-full rounded-lg border border-slatex-100 bg-white px-3.5 py-2.5 text-sm text-ink placeholder:text-slatex-400 focus:border-moss-400 focus:ring-1 focus:ring-moss-400 outline-none;
+}
+.label {
+  @apply block text-xs font-semibold uppercase tracking-wide text-slatex-600 mb-1.5;
+}
