@@ -24,7 +24,16 @@ const io = new Server(server, {
   cors: { origin: process.env.CLIENT_URL || "*", credentials: true },
 });
 
-app.use(cors({ origin: process.env.CLIENT_URL || "*", credentials: true }));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://roommate-3f11.vercel.app",
+      "https://roommate-3f11-i9ep5xcto-vishalborude666s-projects.vercel.app"
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json({ limit: "2mb" }));
 
 app.get("/api/health", (req, res) => res.json({ status: "ok", time: new Date().toISOString() }));
