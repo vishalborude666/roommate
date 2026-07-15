@@ -5,9 +5,9 @@ function normalizeApiBaseUrl(url) {
   if (!url) return fallback;
 
   const trimmed = url.trim().replace(/\/+$/, "");
-  if (trimmed.endsWith("/api")) return trimmed;
+  const withoutTrailingApi = trimmed.replace(/(\/api)+$/, "");
 
-  return `${trimmed}/api`;
+  return `${withoutTrailingApi}/api`;
 }
 
 const api = axios.create({
