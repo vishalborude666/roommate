@@ -82,6 +82,13 @@ app.use("/api/interests", interestRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/admin", adminRoutes);
 
+app.use("/api/api/auth", authRoutes);
+app.use("/api/api/listings", listingRoutes);
+app.use("/api/api/tenant", tenantRoutes);
+app.use("/api/api/interests", interestRoutes);
+app.use("/api/api/chat", chatRoutes);
+app.use("/api/api/admin", adminRoutes);
+
 app.use(notFound);
 app.use(errorHandler);
 
